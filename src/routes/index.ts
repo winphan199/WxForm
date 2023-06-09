@@ -10,7 +10,7 @@ interface IRoute {
 }
 
 const publicRoutes: IRoute[] = [
-  { path: routes.home, component: Home },
+  { path: routes.home, component: Home, layout: null },
   // { path: '/upload', component: Upload, layout: null },
 ];
 const privateRoutes: IRoute[] = [{ path: routes.upload, component: Upload }];
