@@ -1,4 +1,6 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState, useCallback } from 'react';
+
+import validate, { rule } from '~/utils/validate';
 
 type typeInput = 'text' | 'radio';
 
@@ -14,17 +16,28 @@ interface InputProps {
   name: string;
   placeholder?: string;
   radioList?: RadioItem[];
-  state?: { inputValue: string; isValid: boolean };
-  setState?: React.Dispatch<
+  state: { inputValue: string; isValid: boolean };
+  setState: React.Dispatch<
     React.SetStateAction<{
       inputValue: string;
       isValid: boolean;
     }>
   >;
+  validateSchema?: rule[];
 }
 
-function Input({ label = '', type = 'text', name = '', placeholder, radioList, state, setState }: InputProps) {
+function Input({
+  label = '',
+  type = 'text',
+  name = '',
+  placeholder,
+  radioList,
+  state,
+  setState,
+  validateSchema,
+}: InputProps) {
   const [isRadioType, setIsRadioType] = useState(false);
+  const [msg, setMsg] = useState<string>('');
 
   useLayoutEffect(() => {
     if (type === 'radio') {
@@ -33,6 +46,14 @@ function Input({ label = '', type = 'text', name = '', placeholder, radioList, s
       setIsRadioType(false);
     }
   }, [type]);
+
+  const handleValidate = (value: string) => {
+    if (validateSchema) {
+      const result = validate(value, validateSchema);
+      setState((prev) => ({ ...prev, isValid: result.isValid }));
+      setMsg(result?.msg);
+    }
+  };
 
   return (
     <div>
@@ -45,15 +66,17 @@ function Input({ label = '', type = 'text', name = '', placeholder, radioList, s
             name={name}
             placeholder={placeholder ? placeholder : ''}
             onChange={(e) => {
-              if (setState) {
-                setState((prev) => {
-                  return { ...prev, inputValue: e.target.value };
-                });
-              }
+              handleValidate(e.target.value);
+              setState((prev) => {
+                return { ...prev, inputValue: e.target.value };
+              });
             }}
             value={state?.inputValue}
+            onFocus={(e) => {
+              handleValidate(e.target.value);
+            }}
           />
-          <p></p>
+          <p>{msg}</p>
         </>
       )}
       {isRadioType && (
@@ -69,6 +92,7 @@ function Input({ label = '', type = 'text', name = '', placeholder, radioList, s
                   value={radioItem.value}
                   checked={state?.inputValue === radioItem.value}
                   onChange={(e) => {
+                    handleValidate(e.target.value);
                     if (setState) {
                       setState((prev) => {
                         return { ...prev, inputValue: e.target.value };
@@ -80,7 +104,7 @@ function Input({ label = '', type = 'text', name = '', placeholder, radioList, s
               </React.Fragment>
             ))}
           </div>
-          <p>err</p>
+          <p>{msg}</p>
         </>
       )}
     </div>

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Input from '~/components/UI/Input';
 import Select from '~/components/UI/Select';
 import Textarea from '~/components/UI/Textarea';
+import { ruleType } from '~/utils/validate/ruleType';
 
 const RADIOLIST = [
   {
@@ -66,20 +67,36 @@ function Home() {
     isValid: false,
   });
   const [interests, setInterests] = useState<{ inputValue: string | string[]; isValid: boolean }>({
-    inputValue: ['sports', 'music'],
+    inputValue: ['sports'],
     isValid: false,
   });
   const [message, setMessage] = useState({ inputValue: '', isValid: false });
 
   useEffect(() => {
-    console.log(message.inputValue);
-  }, [message.inputValue]);
+    console.log(country);
+  }, [country]);
 
   return (
     <div>
       <form method="POST">
-        <Input type="text" label="Name" name="name" placeholder="Your full name..." state={name} setState={setName} />
-        <Input type="radio" label="Age" name="age" radioList={RADIOLIST} state={age} setState={setAge} />
+        <Input
+          type="text"
+          label="Name"
+          name="name"
+          placeholder="Your full name..."
+          state={name}
+          setState={setName}
+          validateSchema={[{ type: ruleType.Required, errorMsg: 'This field is required' }]}
+        />
+        <Input
+          type="radio"
+          label="Age"
+          name="age"
+          radioList={RADIOLIST}
+          state={age}
+          setState={setAge}
+          validateSchema={[{ type: ruleType.Required }]}
+        />
         <Input
           type="text"
           label="Profession"
@@ -87,6 +104,7 @@ function Home() {
           placeholder="e.g. Software Engineer"
           state={profession}
           setState={setProfession}
+          validateSchema={[{ type: ruleType.Required }]}
         />
         <Select label="Country" name="country" optionList={COUNTRYLIST} state={country} setState={setCountry} />
         <Select

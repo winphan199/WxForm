@@ -1,5 +1,7 @@
 import React from 'react';
 
+import validate, { rule } from '~/utils/validate';
+
 interface Option {
   value: string;
   label: string;
@@ -12,9 +14,10 @@ interface SelectProps {
   multiple?: boolean;
   state: { inputValue: string | string[]; isValid: boolean };
   setState: React.Dispatch<React.SetStateAction<{ inputValue: string | string[]; isValid: boolean }>>;
+  validateSchema?: rule[];
 }
-
-function Select({ label = '', name = '', optionList, multiple = false, state, setState }: SelectProps) {
+// Todo: setdefault value for select and validation
+function Select({ label = '', name = '', optionList, multiple = false, state, setState, validateSchema }: SelectProps) {
   return (
     <div>
       <label htmlFor={name}>{label}</label>
