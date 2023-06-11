@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState, useCallback } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 
 import validate, { rule } from '~/utils/validate';
 
