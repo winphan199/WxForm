@@ -91,7 +91,7 @@ function Input({
             {radioList?.map((radioItem) => (
               <div key={radioItem.id} className="flex items-center mr-3">
                 <input
-                  className="w-5 h-5 mr-1 w-full"
+                  className="w-5 h-5 mr-1"
                   type={type}
                   name={name}
                   id={radioItem.id}
