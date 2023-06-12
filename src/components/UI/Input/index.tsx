@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 
 import validate, { rule } from '~/utils/validate';
 
@@ -56,11 +56,14 @@ function Input({
   };
 
   return (
-    <div>
+    <div className="flex flex-col mb-2">
       {!isRadioType && (
         <>
-          <label htmlFor={name}>{label}</label>
+          <label htmlFor={name} className="text-base uppercase mb-2 font-medium w-full">
+            {label}
+          </label>
           <input
+            className="py-2 px-4 outline-none border border-solid border-[#ddd] rounded text-lg w-full"
             type={type}
             id={name}
             name={name}
@@ -76,16 +79,19 @@ function Input({
               handleValidate(e.target.value);
             }}
           />
-          <p>{msg}</p>
+          <p className="text-sm h-5 text-red-600 w-full">{msg}</p>
         </>
       )}
       {isRadioType && (
         <>
-          <label htmlFor={name}>{label}</label>
-          <div>
+          <label htmlFor={name} className="text-base uppercase mb-2 font-medium w-full">
+            {label}
+          </label>
+          <div className="flex flex-wrap">
             {radioList?.map((radioItem) => (
-              <React.Fragment key={radioItem.id}>
+              <div key={radioItem.id} className="flex items-center mr-3">
                 <input
+                  className="w-5 h-5 mr-1 w-full"
                   type={type}
                   name={name}
                   id={radioItem.id}
@@ -100,11 +106,13 @@ function Input({
                     }
                   }}
                 />
-                <label htmlFor={radioItem.id}>{radioItem.label}</label>
-              </React.Fragment>
+                <label htmlFor={radioItem.id} className="text-base">
+                  {radioItem.label}
+                </label>
+              </div>
             ))}
           </div>
-          <p>{msg}</p>
+          <p className="text-sm h-5 text-red-600">{msg}</p>
         </>
       )}
     </div>

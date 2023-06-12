@@ -29,6 +29,7 @@ const RADIOLIST = [
 ];
 
 const COUNTRYLIST = [
+  { label: 'Choose country', value: '', id: 0 },
   { label: 'Afghanistan', value: 'AF', id: 1 },
   { label: 'Aland Islands', value: 'AX', id: 2 },
   { label: 'Albania', value: 'AL', id: 3 },
@@ -284,6 +285,7 @@ const COUNTRYLIST = [
 ];
 
 const INTERESTLIST = [
+  { label: 'Choose your interests', value: '' },
   {
     label: 'Sports',
     value: 'sports',
@@ -296,6 +298,22 @@ const INTERESTLIST = [
     label: 'Music',
     value: 'music',
   },
+  {
+    label: 'Movie',
+    value: 'movie',
+  },
+  {
+    label: 'Reading',
+    value: 'reading',
+  },
+  {
+    label: 'Cooking',
+    value: 'cooking',
+  },
+  {
+    label: 'Video game',
+    value: 'video game',
+  },
 ];
 
 function Home() {
@@ -307,18 +325,28 @@ function Home() {
     isValid: false,
   });
   const [interests, setInterests] = useState<{ inputValue: string | string[]; isValid: boolean }>({
-    inputValue: ['sports'],
+    inputValue: [''],
     isValid: false,
   });
   const [message, setMessage] = useState({ inputValue: '', isValid: false });
+  const [method, setMethod] = useState('get');
+  const [submitable, setSubmitable] = useState(false);
 
   useEffect(() => {
-    console.log(country);
-  }, [country]);
+    console.log(submitable);
+  }, [submitable]);
+
+  useEffect(() => {
+    setSubmitable(
+      name.isValid && age.isValid && profession.isValid && country.isValid && interests.isValid && message.isValid,
+    );
+  }, [name.isValid, age.isValid, profession.isValid, country.isValid, interests.isValid, message.isValid]);
+
+  const handleSubmit = () => {};
 
   return (
-    <div>
-      <form method="POST">
+    <div className="min-w-screen min-h-screen flex justify-center items-center bg-green-200 ">
+      <form method={method} className="max-w-lg p-8 shadow-lg bg-white m-6 rounded-lg flex flex-col">
         <Input
           type="text"
           label="Name"
@@ -346,7 +374,14 @@ function Home() {
           setState={setProfession}
           validateSchema={[{ type: ruleType.Required }]}
         />
-        <Select label="Country" name="country" optionList={COUNTRYLIST} state={country} setState={setCountry} />
+        <Select
+          label="Country"
+          name="country"
+          optionList={COUNTRYLIST}
+          state={country}
+          setState={setCountry}
+          validateSchema={[{ type: ruleType.Required }]}
+        />
         <Select
           label="Interests"
           name="interests"
@@ -354,9 +389,35 @@ function Home() {
           multiple
           state={interests}
           setState={setInterests}
+          validateSchema={[{ type: ruleType.Required }]}
         />
-        <Textarea label="Message" name="message" maxLength={2000} state={message} setState={setMessage} />
-        <input type="submit" value={'submit'} />
+        <Textarea
+          label="Message"
+          name="message"
+          maxLength={2000}
+          state={message}
+          setState={setMessage}
+          validateSchema={[{ type: ruleType.Required }, { type: ruleType.MaxLength, value: 2000 }]}
+        />
+        <div className="flex justify-between">
+          <button
+            disabled={!submitable}
+            onClick={handleSubmit}
+            className="bg-green-500 px-5 py-3 rounded-md text-lg text-white font-medium capitalize cursor-pointer hover:bg-green-600 transition-colors disabled:opacity-50 disabled:hover:bg-green-500 disabled:cursor-not-allowed"
+          >
+            submit
+          </button>
+          <select
+            className="py-2 px-4 outline-none border border-solid border-[#ddd] rounded text-lg"
+            name="method"
+            id="method"
+            value={method}
+            onChange={(e) => setMethod(e.target.value)}
+          >
+            <option value="get">GET</option>
+            <option value="post">POST</option>
+          </select>
+        </div>
       </form>
     </div>
   );

@@ -27,7 +27,7 @@ export default function validate(value: string, ruleList: rule[]): returnValue {
         }
         break;
       case ruleType.MaxLength:
-        if (rule.value && value.length > rule.value) {
+        if (rule.value && value.length >= rule.value) {
           const result = {
             isValid: false,
             msg: rule.errorMsg ? rule.errorMsg : `Maximum length is ${rule.value}`,
