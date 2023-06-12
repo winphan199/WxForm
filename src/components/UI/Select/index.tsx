@@ -57,7 +57,7 @@ function Select({ label = '', name = '', optionList, multiple = false, state, se
 
             if (values.length > 1) {
               const filteredValues = values.filter((value) => value !== '');
-              setState((prev) => ({ ...prev, inputValue: filteredValues }));
+              setState((prev) => ({ isValid: true, inputValue: filteredValues }));
             } else {
               setState((prev) => {
                 return { ...prev, inputValue: values };

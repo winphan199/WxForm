@@ -333,10 +333,6 @@ function Home() {
   const [submitable, setSubmitable] = useState(false);
 
   useEffect(() => {
-    console.log(submitable);
-  }, [submitable]);
-
-  useEffect(() => {
     setSubmitable(
       name.isValid && age.isValid && profession.isValid && country.isValid && interests.isValid && message.isValid,
     );
