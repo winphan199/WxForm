@@ -1,46 +1,68 @@
-# Getting Started with Create React App
+# WxForm
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This page shows example of a form and validation<br/>
+Live demo: https://wxform.netlify.app
 
-## Available Scripts
+## Start the project
 
-In the project directory, you can run:
+```
+git clone <repo_url>
+cd <repo>
+npm install
+npm start
+```
 
-### `npm start`
+## Inspection
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Using GET request
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<br/>
 
-### `npm test`
+Submit with GET request will make the submitted values appended after the `?` (question mark) in the form of key-value pair or we can say <b>query params</b>.<br/>
+<br/>
+![screenshot of GET request example](/src/assets/img/getrequestexample.png)
+<br/>
+<br/>
+It can be seen in the image that the key-value pair is presented as `key=value` and all the key-value pairs are connected with the `&` (ampersand) symbol. <br/>
+<br/>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Using POST request
 
-### `npm run build`
+<br/>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+With POST request, the submitted values are not appended into the url but instead added into the request body as a <b>Form Data</b>. It is still a key-value pair form as of the GET request, but the server will have a different way to extract this data.
+<br/>
+<br/>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![screenshot of POST request example](/src/assets/img/postrequestexample1.png)
+<br/>
+<br/>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+We can use the network tab to view the POST request. This is the draw value of what we submit to the server.
+<br/>
 
-### `npm run eject`
+<br/>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![screenshot of POST request example](/src/assets/img/postrequestexample2.png)
+<br/>
+<br/>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+We can parse it to the form data, which is more readable.
+<br/>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<br/>
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+> **_NOTE:_** We use POST request for more sensitive data or data which huge size.
 
-## Learn More
+## Technology
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Frontend:
+  - ReactJS
+  - TypeScript
+  - TailwindCSS
+- Hosting:
+  - Netlify
 
-To learn React, check out the [React documentation](https://reactjs.org/)..
+## Author
+
+Hung Phan
